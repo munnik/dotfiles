@@ -10,7 +10,6 @@ do
   if [[ $file =~ ^\.git.* || -z $file ]]; then
     continue
   else
-    echo "mkdir -p $HOME/$file"
     mkdir -p "$HOME/$file"
   fi
 done
@@ -22,7 +21,6 @@ do
   if [[ $file =~ ^\.git.* || $file == `basename $0` ]]; then
     continue
   else
-    echo "ln -sf $scriptpath/$file $HOME/$file"
     ln -sf "$scriptpath/$file" "$HOME/$file"
   fi
 done
