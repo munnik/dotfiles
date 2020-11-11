@@ -19,8 +19,8 @@
 [colors]
 background = #e1222222
 background-alt = #444
-foreground = #bbb
-foreground-alt = #555
+foreground = #ccc
+foreground-alt = #777
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
@@ -46,12 +46,12 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=11;1
-font-1 = FiraCode Nerd Font Mono:style=Retina,Regular:size=8:antialias=false;0
+font-0 = FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=12;1
+font-1 = FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=11;0
 font-2 = FiraCode Nerd Font Mono:style=Retina,Regular:pixelsize=10;1
 
 modules-left = bspwm
-modules-right = filesystem memory cpu battery wlan date 
+modules-right = filesystem memory cpu battery pulseaudio wlan date powermenu
 
 tray-position = right
 tray-padding = 2
@@ -84,9 +84,10 @@ label-empty-padding = 2
 [module/filesystem]
 type = custom/script
 interval = 25
-exec = df -h /home | tail -1 | awk '{print $5}'
+exec = ~/.config/polybar/scripts/homedir.sh
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
+tail = true
 
 [module/cpu]
 type = internal/cpu
@@ -95,16 +96,24 @@ format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 
 [module/memory]
-type = custom/script
-interval = 5
-exec = avail=`sysctl -n hw.physmem`; vmstat 1 1 | tail -1 | awk '{print $4}' | sed 's/M//g' | awk -v avail=$avail '{print int(100-$1*1048576/avail*100) "%"}'
+type = internal/memory
+interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 
 [module/wlan]
-type = custom/script
-exec = ~/.config/polybar/scripts/wlan.sh
-tail = true
+type = internal/network
+interface = wlp59s0
+interval = 3
+
+format-connected = <ramp-signal> <label-connected>
+ramp-signal-0 = ""
+ramp-signal-1 = ""
+ramp-signal-2 = ""
+ramp-signal-3 = ""
+ramp-signal-foreground = ${colors.foreground-alt}
+label-connected = %essid%
+label-disconnected = 睊?
 
 [module/date]
 type = internal/date
@@ -121,11 +130,38 @@ format-prefix-foreground = ${colors.foreground-alt}
 
 label = %date% %time%
 
-
 [module/battery]
-type = custom/script
-exec = ~/.config/polybar/scripts/battery.sh
-tail = true
+type = internal/battery
+battery = BAT0
+adapter= AC
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <animation-discharging> <label-discharging>
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.foreground-alt}
+
+animation-charging-0 =  
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-5 = 
+animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-framerate = 750
+
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+animation-discharging-5 = 
+animation-discharging-6 = 
+animation-discharging-7 = 
+animation-discharging-8 = 
+animation-discharging-9 = 
+animation-discharging-foreground = ${colors.foreground-alt}
+animation-discharging-framerate = 450
 
 [settings]
 screenchange-reload = true

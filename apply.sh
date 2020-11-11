@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-cd `dirname $0`
-path=$HOME
+
+scriptpath="$(cd "$(dirname "$0")" > /dev/null 2>&1; pwd -P)"
 
 echo 'Making all directories'
 find . -type d -print0 | while read -d $'\0' file
@@ -10,8 +10,8 @@ do
   if [[ $file =~ ^\.git.* || -z $file ]]; then
     continue
   else
-    echo "mkdir -p $path/$file"
-    mkdir -p "$path/$file"
+    echo "mkdir -p $HOME/$file"
+    mkdir -p "$HOME/$file"
   fi
 done
 
@@ -22,8 +22,8 @@ do
   if [[ $file =~ ^\.git.* || $file == `basename $0` ]]; then
     continue
   else
-    echo "ln -sf $file $path/$file"
-    ln -sf "$file" "$path/file"
+    echo "ln -sf $scriptpath/$file $HOME/$file"
+    ln -sf "$scriptpath/$file" "$HOME/$file"
   fi
 done
 
