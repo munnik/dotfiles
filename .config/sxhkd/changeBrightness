@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [[ $1 == "Up" ]]; then
+  xbacklight -inc 5
+  action="Increased brightness"
+  icon="display-brightness-high-symbolic"
+elif [[ $1 == "Down" ]]; then
+  xbacklight -dec 5
+  action="Decreased brightness"
+  icon="display-brightness-low-symbolic"
+fi
+
+/usr/bin/dunstify -r 101010 -a "changeBrightness" -u low -i "$icon" "$action"

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [[ $1 == "Up" ]]; then
+  amixer -q sset Master 3%+
+  action="Raised volume"
+  icon="audio-volume-high-symbolic"
+elif [[ $1 == "Down" ]]; then
+  amixer -q sset Master 3%-
+  action="Lowered volume"
+  icon="audio-volume-low-symbolic"
+else
+  amixer -q sset Master toggle
+  muted="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
+  if [[ $muted == "off" ]]; then
+    action="Muted"
+    icon="audio-volume-muted-symbolic"
+  else
+    action="Unmuted"
+    icon="audio-volume-high-symbolic"
+  fi
+fi
+
+/usr/bin/dunstify -r 909090 -a "changeVolume" -u low -i "$icon" "$action"

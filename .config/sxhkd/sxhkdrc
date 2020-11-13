@@ -121,20 +121,11 @@ super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 # function keys
-XF86MonBrightnessDown
-  xbacklight -dec 5
+XF86MonBrightness{Down,Up}
+  ~/.config/sxhkd/changeBrightness {Down,Up}
 
-XF86MonBrightnessUp
-  xbacklight -inc 5
-
-XF86AudioMute
-  amixer sset Master toggle
-
-XF86AudioLowerVolume
-  amixer sset Master 2%-
-
-XF86AudioRaiseVolume
-  amixer sset Master 2%+
+XF86Audio{Mute,LowerVolume,RaiseVolume}
+  ~/.config/sxhkd/changeVolume {Toggle,Down,Up} 
 
 F7
   bspc node next.floating --flag hidden
