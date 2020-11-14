@@ -10,4 +10,5 @@ elif [[ $1 == "Down" ]]; then
   icon="display-brightness-low-symbolic"
 fi
 
-/usr/bin/dunstify -r 101010 -a "changeBrightness" -u low -i "$icon" "$action"
+msg=$($HOME/.config/sxhkd/progress 20 "" "" $(xbacklight))
+/usr/bin/dunstify -r 101010 -a "changeBrightness" -u low -i "$icon" "$action" "$msg"

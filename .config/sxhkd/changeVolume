@@ -20,4 +20,10 @@ else
   fi
 fi
 
-/usr/bin/dunstify -r 909090 -a "changeVolume" -u low -i "$icon" "$action"
+if [[ $muted == "off" ]]; then
+  volume=0
+else
+  volume="$(amixer -c 0 get Master | tail -1 | awk '{print $4}' | sed 's/[^0-9]*//g')"
+fi
+msg=$($HOME/.config/sxhkd/progress 20 "" "" $volume)
+/usr/bin/dunstify -r 909090 -a "changeVolume" -u low -i "$icon" "$action" "$msg"
