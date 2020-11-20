@@ -23,9 +23,11 @@ Plug 'sheerun/vim-polyglot'
 Plug 'fatih/vim-go'
 "Autocomplete:
 Plug 'neoclide/coc.nvim'
-Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
+"Debugging:
+Plug 'puremourning/vimspector'
 "Snippets:
 Plug 'SirVer/ultisnips'
+Plug 'tpenguinltg/vim-closing-brackets'
 "Git:
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -34,10 +36,14 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
-"COPY/PASTE:
+"COPY_PASTE:
 "-----------
 "Increases the memory limit from 50 lines to 1000 lines
 :set viminfo='100,<1000,s10,h
+
+"LEADER_KEY:
+"-----------
+let g:mapleader=','
 
 "NUMBERING:
 "----------
@@ -178,9 +184,14 @@ let g:go_fmt_command = "goimports"
 let g:go_auto_type_info = 1
 let g:go_def_mapping_enabled = 0
 
+"DEBUGGING:
+"----------
+let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_install_gadgets = [ 'vscode-go' ]
+
 "COC:
 "----
-let g:coc_global_extensions = ['coc-css', 'coc-go', 'coc-html', 'coc-json', 'coc-python', 'coc-spell-checker', 'coc-sql', 'coc-tsserver', 'coc-vetur', 'coc-vimlsp']
+let g:coc_global_extensions = ['coc-actions', 'coc-css', 'coc-html', 'coc-json', 'coc-python', 'coc-spell-checker', 'coc-sql', 'coc-tsserver', 'coc-vetur', 'coc-vimlsp']
 " if hidden is not set, TextEdit might fail.
 set hidden
 " Better display for messages
@@ -243,3 +254,10 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" Remap for do codeAction of selected region
+function! s:cocActionsOpenFromSelected(type) abort
+  execute 'CocCommand actions.open ' . a:type
+endfunction
+xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
