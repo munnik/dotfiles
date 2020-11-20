@@ -15,4 +15,4 @@ bspc config top_padding          32
 bspc config focus_follows_pointer true
 
 bspc rule -r "*"
-bspc rule -a KeePassXC state=floating center=on hidden=on sticky=on
+bspc rule -a KeePassXC state=floating center=on hidden=on sticky=on rectangle=1300x1000+310+40
