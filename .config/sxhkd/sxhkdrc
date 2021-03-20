@@ -2,6 +2,10 @@
 # wm independent hotkeys
 #
 
+# lock screen
+super + BackSpace
+  xset s activate
+
 # terminal emulator
 super + Return
 	alacritty
