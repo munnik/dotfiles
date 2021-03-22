@@ -11,4 +11,5 @@ export XSECURELOCK_PASSWORD_PROMPT=time_hex
 export XSECURELOCK_SAVER=saver_mpv
 export XSECURELOCK_SHOW_HOSTNAME=0
 xss-lock -n /usr/libexec/xsecurelock/saver_mpv -l -- env xsecurelock &
+xmodmap -e "pointer = 1 2 3 5 4 6 7 8 9 10"
 exec bspwm
